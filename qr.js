@@ -52,14 +52,20 @@ router.get('/', async (req, res) => {
                 const { connection, lastDisconnect, qr } = s;
 
                 if (qr) {
-                    // Generate QR code as PNG buffer and send it to the browser
-                    res.setHeader('Content-Type', 'image/png');
-                    try {
-                        const qrBuffer = await QRCode.toBuffer(qr);  // Convert QR to buffer
-                        res.end(qrBuffer);  // Send the buffer as the response
-                    } catch (error) {
-                        console.error("Error generating QR Code buffer:", error);
-                        res.status(500).json({ message: "Error generating QR code" });
+                    // Ensure the response is only sent once
+                    if (!res.headersSent) {
+                        res.setHeader('Content-Type', 'image/png');
+                        try {
+                            const qrBuffer = await QRCode.toBuffer(qr);  // Convert QR to buffer
+                            res.end(qrBuffer);  // Send the buffer as the response
+                            return; // Exit the function to avoid sending further responses
+                        } catch (error) {
+                            console.error("Error generating QR Code buffer:", error);
+                            if (!res.headersSent) {
+                                res.status(500).json({ message: "Error generating QR code" });
+                            }
+                            return; // Exit after sending the error response
+                        }
                     }
                 }
 
@@ -86,7 +92,10 @@ router.get('/', async (req, res) => {
                 } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode !== 401) {
                     // If the connection is unexpectedly closed, retry
                     await delay(10000);
-                    Getqr();
+                    // Only retry if no response has been sent yet
+                    if (!res.headersSent) {
+                        await Getqr();
+                    }
                 }
             });
 
@@ -108,3 +117,4 @@ router.get('/', async (req, res) => {
 
 // Export the router to be used in your Express app
 module.exports = router;
+                                      
