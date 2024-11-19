@@ -8,6 +8,9 @@
     "scripts": {
     "start": "node index.js"
   },
+  "author": "GlobalTechInfo",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "@whiskeysockets/baileys": "^6.6.0",
     "qrcode": "^1.5.3",
