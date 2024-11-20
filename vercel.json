@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "pair.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "qr.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "id.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "main.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "pair.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "temp/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/qr",
+      "dest": "qr.js"
+    },
+    {
+      "src": "/api/pair",
+      "dest": "pair.js"
+    },
+    {
+      "src": "/api/id",
+      "dest": "id.js"
+    },
+    {
+      "src": "/",
+      "dest": "main.html"
+    },
+    {
+      "src": "/pair",
+      "dest": "pair.html"
+    },
+    {
+      "src": "/temp/(.*)",
+      "dest": "/temp/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.7.2"
+  }
+}
