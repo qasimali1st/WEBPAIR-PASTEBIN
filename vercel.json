@@ -32,15 +32,15 @@
   ],
   "routes": [
     {
-      "src": "/api/qr",
+      "src": "/qr",
       "dest": "qr.js"
     },
     {
-      "src": "/api/pair",
+      "src": "/pair",
       "dest": "pair.js"
     },
     {
-      "src": "/api/id",
+      "src": "/id",
       "dest": "id.js"
     },
     {
