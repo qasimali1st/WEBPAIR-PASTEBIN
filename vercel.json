@@ -36,11 +36,11 @@
       "dest": "qr.js"
     },
     {
-      "src": "/pair",
+      "src": "/root/pair",
       "dest": "pair.js"
     },
     {
-      "src": "/id",
+      "src": "/root/id",
       "dest": "id.js"
     },
     {
